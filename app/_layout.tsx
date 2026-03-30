@@ -1,24 +1,21 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const headerStyle = {
+    headerTitleAlign: 'center' as const,
+    headerStyle: { backgroundColor: '#101418' },
+    headerTintColor: '#FFFFFF',
+  };
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <Stack>
+      <Stack.Screen name="index" options={{ title: 'Gym App', ...headerStyle }} />
+      <Stack.Screen name="goal" options={{ title: 'Your Goal', ...headerStyle }} />
+      <Stack.Screen name="experience" options={{ title: 'Experience', ...headerStyle }} />
+      <Stack.Screen name="days-per-week" options={{ title: 'Days Per Week', ...headerStyle }} />
+      <Stack.Screen name="equipment" options={{ title: 'Equipment', ...headerStyle }} />
+      <Stack.Screen name="session-length" options={{ title: 'Session Length', ...headerStyle }} />
+      <Stack.Screen name="plan-ready" options={{ title: 'Plan Ready', ...headerStyle }} />
+    </Stack>
   );
 }
