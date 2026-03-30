@@ -1,15 +1,33 @@
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+type OnboardingParams = {
+  goal?: string;
+  experience?: string;
+  daysPerWeek?: string;
+  equipment?: string;
+  sessionLength?: string;
+};
+
 export default function SessionLengthScreen(): React.JSX.Element {
   const options: string[] = ['30 minutes', '45 minutes', '60 minutes'];
+  const params = useLocalSearchParams<OnboardingParams>();
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>How long are your workouts?</Text>
       {options.map((option) => (
-        <TouchableOpacity key={option} style={styles.option} onPress={() => router.push('/plan-ready')}>
+        <TouchableOpacity
+          key={option}
+          style={styles.option}
+          onPress={() =>
+            router.push({
+              pathname: '/plan-ready',
+              params: { ...params, sessionLength: option },
+            })
+          }
+        >
           <Text style={styles.optionText}>{option}</Text>
         </TouchableOpacity>
       ))}

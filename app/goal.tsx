@@ -2,6 +2,14 @@ import { router } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+type OnboardingParams = {
+  goal?: string;
+  experience?: string;
+  daysPerWeek?: string;
+  equipment?: string;
+  sessionLength?: string;
+};
+
 export default function GoalScreen(): React.JSX.Element {
   const options: string[] = ['Build muscle', 'Lose fat', 'Get stronger', 'Stay consistent'];
 
@@ -9,7 +17,16 @@ export default function GoalScreen(): React.JSX.Element {
     <View style={styles.container}>
       <Text style={styles.title}>What is your goal?</Text>
       {options.map((option) => (
-        <TouchableOpacity key={option} style={styles.option} onPress={() => router.push('/experience')}>
+        <TouchableOpacity
+          key={option}
+          style={styles.option}
+          onPress={() =>
+            router.push({
+              pathname: '/experience',
+              params: { goal: option } satisfies OnboardingParams,
+            })
+          }
+        >
           <Text style={styles.optionText}>{option}</Text>
         </TouchableOpacity>
       ))}

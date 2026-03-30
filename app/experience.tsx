@@ -1,15 +1,33 @@
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+type OnboardingParams = {
+  goal?: string;
+  experience?: string;
+  daysPerWeek?: string;
+  equipment?: string;
+  sessionLength?: string;
+};
+
 export default function ExperienceScreen(): React.JSX.Element {
   const options: string[] = ['Beginner', 'Intermediate', 'Advanced'];
+  const params = useLocalSearchParams<OnboardingParams>();
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>What is your experience level?</Text>
       {options.map((option) => (
-        <TouchableOpacity key={option} style={styles.option} onPress={() => router.push('/days-per-week')}>
+        <TouchableOpacity
+          key={option}
+          style={styles.option}
+          onPress={() =>
+            router.push({
+              pathname: '/days-per-week',
+              params: { ...params, experience: option },
+            })
+          }
+        >
           <Text style={styles.optionText}>{option}</Text>
         </TouchableOpacity>
       ))}

@@ -1,15 +1,33 @@
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+type OnboardingParams = {
+  goal?: string;
+  experience?: string;
+  daysPerWeek?: string;
+  equipment?: string;
+  sessionLength?: string;
+};
+
 export default function DaysPerWeekScreen(): React.JSX.Element {
   const options: string[] = ['2 days', '3 days', '4 days', '5 days'];
+  const params = useLocalSearchParams<OnboardingParams>();
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>How many days per week?</Text>
       {options.map((option) => (
-        <TouchableOpacity key={option} style={styles.option} onPress={() => router.push('/equipment')}>
+        <TouchableOpacity
+          key={option}
+          style={styles.option}
+          onPress={() =>
+            router.push({
+              pathname: '/equipment',
+              params: { ...params, daysPerWeek: option },
+            })
+          }
+        >
           <Text style={styles.optionText}>{option}</Text>
         </TouchableOpacity>
       ))}
